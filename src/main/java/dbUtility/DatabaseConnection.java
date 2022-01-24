@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,29 +16,23 @@ import java.sql.Types;
 import java.util.*;
 
 
-
-
-
-public class DatabaseConnection {
+public class DatabaseConnection implements DbDetails {
 	
 	public static Connection con = null;
 	
-	/**
-	 * Method for creating DB Connection
-	 * @author jitatmadison
-	 * @throws IOException 
-	 * @throws FileNotFoundException 
-	 */
+	 /**
+		 * Method for creating DB Connection
+		 * @author jitatmadison
+		 * @throws IOException 
+		 * @throws FileNotFoundException 
+		 */
 	
 	public static Connection createConnection() throws FileNotFoundException, IOException{
 		
+		DbDetails dbdtls=new DatabaseConnection();
 		
-		String userName="testuser1";
-		String password="tuscany";
-		String MySQLUrl="jdbc:mysql://35.239.76.158:3306/db_tuscany?user=testuser1";
-	             
-	         try {
-	         con = DriverManager.getConnection(MySQLUrl, userName, password);
+		try {
+	         con = DriverManager.getConnection(dbdtls.MYSQLURL, dbdtls.DBUSERNAME, dbdtls.DBPASSWORD);
 	       
 	         if (con != null) {
 	            System.out.println("******MySQL connection to db_tuscany database is successful******");
